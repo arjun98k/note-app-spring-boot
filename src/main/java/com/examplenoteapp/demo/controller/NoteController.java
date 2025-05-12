@@ -30,6 +30,26 @@ public class NoteController {
         return noteRepository.findAll();
     }
 
+    // Show a form for editing
+    @GetMapping("/edit-note")
+    @ResponseBody
+    public Note getNoteById(@RequestParam Long id) {
+        return noteRepository.findById(id).orElse(null);
+    }
+
+    // Update note
+    @PostMapping("/update-note")
+    public String updateNote(@RequestParam Long id, @RequestParam String title, @RequestParam String content) {
+        Note note = noteRepository.findById(id).orElse(null);
+        if (note != null) {
+            note.setTitle(title);
+            note.setContent(content);
+            noteRepository.save(note);
+        }
+        return "redirect:/index.html";
+    }
+
+
     @PostMapping("/delete-note")
     public String deleteNote(@RequestParam Long id) {
         noteRepository.deleteById(id);

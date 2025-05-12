@@ -4,7 +4,7 @@ body {
     background-color: #f7f7f7;
 }
 
-h1 {
+h1, h2 {
     color: #333;
 }
 
@@ -27,6 +27,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 5px;
 }
 
 button:hover {
@@ -55,13 +56,15 @@ button:hover {
 }
 
 .note form {
-    margin-top: 10px;
+    display: inline;
+    margin-right: 10px;
 }
 
 .note button {
     background-color: #dc3545;
     padding: 5px 15px;
     border-radius: 5px;
+    font-size: 14px;
 }
 
 .note button:hover {
