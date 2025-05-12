@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Note App</h1>
+
+<!-- Add Note Form -->
+<form action="/add-note" method="post">
+    <input type="text" name="title" placeholder="Title" required><br>
+    <textarea name="content" placeholder="Content" required></textarea><br>
+    <button type="submit">Add Note</button>
+</form>
+
+<h2>All Notes</h2>
+<div id="notes">
+    <!-- Notes will be dynamically rendered here using JavaScript -->
+</div>
+
+<p>Visit <a href="/notes" target="_blank">/notes</a> to see JSON output</p>
+
+<script>
+    // Function to fetch notes from the /notes endpoint
+    fetch('/notes')
+        .then(response => response.json())
+        .then(notes => {
+            const notesContainer = document.getElementById('notes');
+            notes.forEach(note => {
+                const noteDiv = document.createElement('div');
+                noteDiv.classList.add('note');
+                noteDiv.innerHTML = `
+                    <h3>${note.title}</h3>
+                    <p>${note.content}</p>
+                    <form action="/delete-note" method="post">
+                        <input type="hidden" name="id" value="${note.id}">
+                        <button type="submit">Delete</button>
+                    </form>
+                `;
+                notesContainer.appendChild(noteDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching notes:', error);
+        });
+</script>
+</body>
+</html>
